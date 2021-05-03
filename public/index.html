@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Server</title>
+</head>
+<body>
+    
+    <h1>Acceso denegado</h1>
+
+
+    <script src="socket.io/socket.io.js"></script>
+
+    <script>
+        /* io, se encuentra dentro de la libreria de arriba */
+        var client = io();
+
+        client.on('connect', function(){
+            console.log('Conectado al servidor');
+        })
+
+        client.on('disconnect', function(){
+            console.log('Desconectado del servidor');
+        })
+
+        /*
+            message - Nombre del evento que vamos a emitir
+            { nombre: 'Mariana'} - Payload: Lo que vamos a enviar
+        */
+        client.emit('message', { nombre: 'Mariana'} );
+
+        /* Escuchar lo que el servidor emite como "mensaje" */
+        client.on('message', function(payload){
+            console.log(payload);
+        });
+
+
+        client.on('new-message', function(payload){
+            console.log(payload);
+        });
+
+        client.on('active-bands', function(payload){
+            console.clear();
+            console.table(payload);
+        });
+
+
+    </script>
+
+</body>
+</html>
